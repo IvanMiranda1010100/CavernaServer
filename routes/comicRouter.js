@@ -23,7 +23,7 @@ router.get('/:id/:title', async (req, res) => {
   }
 });
 
-
+// Ruta para obtener un cómic por ID
 router.get('/:id', async (req, res) => {
   try {
     const comic = await Comic.findById(req.params.id).lean(); // Busca el cómic por ID
