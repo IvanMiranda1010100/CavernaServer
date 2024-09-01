@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config(); // Asegúrate de cargar las variables de entorno
 
 // Conectar a MongoDB Atlas usando la variable de entorno MONGO_URI
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URL);
 
 const objeto = mongoose.connection;
 
