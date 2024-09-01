@@ -1,11 +1,26 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const emailRoutes = require('./mail'); // Ruta para el envío de correos electrónicos
-dotenv.config();
+const mongoose = require('mongoose');
 
-const mongoose = require('./conecct'); // Conexión a MongoDB
-const rutaComics = require('./routes/comicRouter'); // Rutas de los cómics
+require('dotenv').config();
+
+const emailRoutes = require('./mail'); 
+
+const rutaComics = require('./routes/comicRouter');
+
+// Conectar a MongoDB Atlas usando la variable de entorno MONGO_URI
+mongoose.connect(process.env.MONGO_URL);
+
+const objeto = mongoose.connection;
+
+// Manejo de eventos
+objeto.on('connected', () => {
+  console.log('La base de datos de MongoDB ha sido conectada');
+});
+
+objeto.on('error', (err) => {
+  console.error('Error en la conexión a la base de datos de MongoDB:', err.message);
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
