@@ -34,4 +34,49 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const {
+    title,
+    description,
+    imageUrl,
+    contentUrls,
+    rating,
+    authors,
+    artists,
+    genres,
+    type,
+    publicationYear,
+    status,
+    editor
+  } = req.body;
+
+  // Validar datos
+  if (!title || !description) {
+    return res.status(400).json({ message: 'Title and description are required' });
+  }
+
+  try {
+    const newComic = new Comic({
+      title,
+      description,
+      imageUrl,
+      contentUrls,
+      rating,
+      authors,
+      artists,
+      genres,
+      type,
+      publicationYear,
+      status,
+      editor
+    });
+
+    // Guardar el cómic en la base de datos
+    const savedComic = await newComic.save();
+    res.status(201).json(savedComic);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
